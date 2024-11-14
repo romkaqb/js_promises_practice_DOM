@@ -20,13 +20,11 @@ const secondPromise = new Promise(function (resolve) {
   });
 });
 
-const thirdPromise = new Promise(function (resolve, reject) {
+const thirdPromise = new Promise(function (resolve) {
   document.addEventListener('mousedown', (e) => {
-    if (e.button === 3) {
+    if (e.button === 0 && e.button === 2) {
       resolve('Third promise was resolved');
     }
-
-    reject(new Error('Third promise was resolved'));
   });
 });
 
