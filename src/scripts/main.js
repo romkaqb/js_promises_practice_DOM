@@ -2,15 +2,19 @@
 
 const firstPromise = new Promise(function (resolve, reject) {
   document.addEventListener('mousedown', (e) => {
-    if (e.button === 0) {
-      resolve('First promise was resolved');
-    }
-
     setTimeout(() => {
       reject(new Error(`First promise was rejected`));
     }, 3000);
+
+    if (e.button === 0) {
+      clearTimeout();
+      resolve('First promise was resolved');
+    }
   });
 });
+
+let leftClicked = false;
+let rightClicked = false;
 
 const secondPromise = new Promise(function (resolve) {
   document.addEventListener('mousedown', (e) => {
@@ -22,8 +26,14 @@ const secondPromise = new Promise(function (resolve) {
 
 const thirdPromise = new Promise(function (resolve) {
   document.addEventListener('mousedown', (e) => {
-    if (e.button === 0 && e.button === 2) {
-      resolve('Third promise was resolved');
+    if (e.button === 0) {
+      leftClicked = true;
+    } else if (e.button === 2) {
+      rightClicked = true;
+    }
+
+    if (rightClicked && leftClicked) {
+      resolve('Second promise was resolved');
     }
   });
 });
